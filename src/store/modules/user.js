@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-
+const qs = require('querystring')
 const user = {
   state: {
     token: getToken(),
@@ -28,11 +28,13 @@ const user = {
     // 登录
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
+      console.log(userInfo)
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          const data = response.data
-          setToken(data.token)
-          commit('SET_TOKEN', data.token)
+        let formData = qs.stringify(userInfo)
+        login(formData).then(response => {
+          const data = response.data.data
+          setToken(data)
+          commit('SET_TOKEN', data)
           resolve()
         }).catch(error => {
           reject(error)
@@ -43,15 +45,16 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
+        console.log(state.token)
         getInfo(state.token).then(response => {
-          const data = response.data
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
+          const data = response.data.data
+          if (data.roleList && data.roleList.length > 0) { // 验证返回的roles是否是一个非空数组
+            commit('SET_ROLES', data.roleList)
           } else {
-            reject('getInfo: roles must be a non-null array !')
+            reject('getInfo: roleList must be a non-null array !')
           }
           commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
+          commit('SET_AVATAR', data.photo)
           resolve(response)
         }).catch(error => {
           reject(error)
