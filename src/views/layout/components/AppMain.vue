@@ -1,9 +1,11 @@
 <template>
   <section class="app-main">
-    <transition name="fade" mode="out-in">
-      <!-- <router-view :key="key"></router-view> -->
-      <router-view></router-view>
-    </transition>
+    <div class="app-con">
+        <transition name="fade" mode="out-in">
+          <!-- <router-view :key="key"></router-view> -->
+           <router-view></router-view>
+        </transition>
+    </div>
   </section>
 </template>
 
@@ -17,3 +19,7 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  
+</style>
+

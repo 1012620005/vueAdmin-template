@@ -1,15 +1,16 @@
 <template>
   <div class="app-wrapper" :class="classObj">
-    <tab-header></tab-header>
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
-    <sidebar class="sidebar-container"></sidebar>
-    <div class="main-container">
-      <navbar></navbar>
-      <app-main></app-main>
+    <tab-header class="app-header"></tab-header>
+    <div class="app-content">
+        <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
+        <sidebar class="sidebar-container"></sidebar>
+         <div class="main-container">
+            <navbar></navbar>
+            <app-main></app-main>
+        </div>
     </div>
   </div>
 </template>
-
 <script>
 import { Navbar, Sidebar, AppMain, TabHeader } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
@@ -52,6 +53,13 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
+    display:flex;
+    flex-direction:column;
+  }
+  .app-content{
+    flex:1;
+    background:#eee;
+    display:flex;
   }
   .drawer-bg {
     background: #000;

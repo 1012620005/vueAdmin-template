@@ -1,37 +1,37 @@
 <template>
   <div class="menu-wrapper">
-    <template v-for="item in routes" v-if="!item.hidden&&item.children">
-
-      <router-link v-if="hasOneShowingChildren(item.children) && !item.children[0].children&&!item.alwaysShow" :to="item.path+'/'+item.children[0].path"
-        :key="item.children[0].name">
-        <el-menu-item :index="item.path+'/'+item.children[0].path" :class="{'submenu-title-noDropdown':!isNest}">
-          <svg-icon v-if="item.children[0].meta&&item.children[0].meta.icon" :icon-class="item.children[0].meta.icon"></svg-icon>
-          <span v-if="item.children[0].meta&&item.children[0].meta.title" slot="title">{{item.children[0].meta.title}}</span>
-        </el-menu-item>
-      </router-link>
-
-      <el-submenu v-else :index="item.name||item.path" :key="item.name">
-        <template slot="title">
-          <svg-icon v-if="item.meta&&item.meta.icon" :icon-class="item.meta.icon"></svg-icon>
-          <span v-if="item.meta&&item.meta.title" slot="title">{{item.meta.title}}</span>
-        </template>
-
-        <template v-for="child in item.children" v-if="!child.hidden">
+    <!-- <template v-for="item in routes" >
+      <template v-for="child in item.children" v-if="item.children  && item.children.length > 0">
           <sidebar-item :is-nest="true" class="nest-menu" v-if="child.children&&child.children.length>0" :routes="[child]" :key="child.path"></sidebar-item>
-
-          <router-link v-else :to="item.path+'/'+child.path" :key="child.name">
-            <el-menu-item :index="item.path+'/'+child.path">
-              <svg-icon v-if="child.meta&&child.meta.icon" :icon-class="child.meta.icon"></svg-icon>
-              <span v-if="child.meta&&child.meta.title" slot="title">{{child.meta.title}}</span>
+          <router-link v-else :to="item.id" :key="child.name">
+            <el-menu-item :index="item.id">
+              <span  slot="title">{{child.name}}</span>
             </el-menu-item>
           </router-link>
+      </template>
+      <el-submenu  :index="item.href" :key="item.name" v-else>
+        <template slot="title">
+          <span  slot="title">{{item.name}}</span>
         </template>
       </el-submenu>
-
-    </template>
+    </template> -->
+    <div v-for="item in routes" :key="item.name">
+      <el-submenu :index="item.id" v-if="item.children  && item.children.length > 0">
+          <template slot="title">
+              <i class="el-icon-caret-right"></i>
+              <span>{{ item.name }}</span>
+          </template>
+          <sidebar-item :routes="item.children"></sidebar-item>
+      </el-submenu>
+      <el-menu-item :index="item.href" v-else>
+              <template slot="title">
+              <i class="el-icon-caret-right"></i>
+              <span>{{ item.name}}</span>
+          </template>
+      </el-menu-item>
+    </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'SidebarItem',
