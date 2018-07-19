@@ -1,0 +1,85 @@
+{
+  "router_zh": [
+    {
+      "name": "login",
+      "path": "/login",
+      "hidden": true,
+      "meta": { "title": "登录","icon": "" }
+    },
+    {
+      "path": "/admin",
+      "name": "admin",
+      "meta": {
+          "title": "处罚",
+          "icon": "el-icon-menu"
+      },
+      "component":"Layout",
+      "children": [
+          { 
+          "path": "punish",  
+          "name": "punish", 
+          "meta": { "title": "处罚管理","icon": "el-icon-menu" }
+          },
+          { 
+          "path": "punishstu",  
+          "name": "punishstu", 
+          "meta": { "title": "学生处罚记录", "icon": "el-icon-menu"}
+          }
+        ]
+    },
+    {
+      "path": "/repair",
+      "name": "repair",
+      "meta": {
+          "title": "报修管理",
+          "icon": "el-icon-menu"
+      },
+      "component":"Layout",
+      "children": [
+          { 
+          "path": "equipRepairManage",  
+          "name": "equipRepairManage", 
+          "meta": { "title": "申请报修","icon": "el-icon-menu" }
+          },
+          { 
+          "path": "equipmentManage",  
+          "name": "equipmentManage", 
+          "meta": { "title": "审核报修", "icon": "el-icon-menu"}
+          },
+          {
+            "path": "repairManage",  
+            "name": "repairManage", 
+            "meta": { "title": "维修管理", "icon": "el-icon-menu"}
+          }
+        ]
+    },
+    {
+      "path": "/major",
+      "name": "major",
+      "meta": {
+          "title": "专业管理",
+          "icon": "el-icon-menu"
+      },
+      "component":"Layout",
+
+      "children": [
+          { 
+          "path": "equipRepairManage",  
+          "name": "equipRepairManage", 
+          "meta": { "title": "申请报修","icon": "el-icon-menu" }
+          },
+          { 
+          "path": "equipmentManage",  
+          "name": "equipmentManage", 
+          "meta": { "title": "审核报修", "icon": "el-icon-menu"}
+          },
+          {
+            "path": "repairManage",  
+            "name": "repairManage", 
+            "meta": { "title": "维修管理", "icon": "el-icon-menu"}
+          }
+        ]
+    }
+  ]
+}
+  
