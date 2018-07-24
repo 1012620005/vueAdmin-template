@@ -1,5 +1,7 @@
 <template>
-    <div class="headerBox"></div>
+    <div class="headerBox">
+        <slot></slot>
+    </div>
 </template>
 <script>
 export default {
@@ -8,7 +10,7 @@ export default {
 </script>
 <style lang="scss" scoped>
    .headerBox{
-       height:50px;
+       height:56px;
        background:rgb(48, 65, 86)
    }
 </style>

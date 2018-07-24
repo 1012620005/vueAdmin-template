@@ -19,10 +19,10 @@ export default {
   components: { SidebarItem },
   computed: {
     ...mapGetters([
-      'roles'
+      'menuList'
     ]),
     routes() {
-      return this.roles[0].menuList
+      return this.menuList
     },
     isCollapse() {
       return !this.sidebar.opened

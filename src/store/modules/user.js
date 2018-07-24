@@ -1,4 +1,5 @@
 import { login, logout, getInfo } from '@/api/login'
+import { changeRole } from '@/api/layout'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 const qs = require('querystring')
 const user = {
@@ -6,7 +7,8 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    menuList:[]
   },
 
   mutations: {
@@ -21,6 +23,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_MENULIST: (state, menuList) => {
+      state.menuList = menuList
     }
   },
 
@@ -28,7 +33,7 @@ const user = {
     // 登录
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
-      console.log(userInfo)
+      console.log('=================')
       return new Promise((resolve, reject) => {
         let formData = qs.stringify(userInfo)
         login(formData).then(response => {
@@ -50,6 +55,7 @@ const user = {
           const data = response.data.data
           if (data.roleList && data.roleList.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', data.roleList)
+            commit('SET_MENULIST', data.roleList[0].menuList)
           } else {
             reject('getInfo: roleList must be a non-null array !')
           }
@@ -61,13 +67,32 @@ const user = {
         })
       })
     },
-
+    ChangeRole({commit},params){
+      console.log(params)
+      console.log('+++++++')
+      return new Promise((resolve, reject) =>{
+        changeRole(params).then(response =>{
+          const data = response.data.data
+          if(data.menuList && data.menuList.length > 0) {
+            commit('SET_MENULIST', data.menuList)
+          } else {
+            reject('getInfo: roleList must be a non-null array !')
+          }
+            resolve(data)
+          }).catch(error => {
+            reject(error)
+          })
+      })
+    },
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
+          commit('SET_MENULIST', [])
+          commit('SET_AVATAR', '')
+          commit('SET_NAME', '')
           removeToken()
           resolve()
         }).catch(error => {
